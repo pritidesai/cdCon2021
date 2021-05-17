@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: cdcon-source
+  namespace: cdcon
+spec:
+  params:
+    - name: url
+      value: 'https://github.com/pritidesai/node-web-app'
+    - name: revision
+      value: master
+  type: git
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: cdcon-image
+  namespace: cdcon
+spec:
+  params:
+    - name: url
+#      value: 'docker.io/pritidesai/cdcon2021-app:latest'
+      value: 'docker.io/pritidesai/web-node-app:latest'
+  type: image

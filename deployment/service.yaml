@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cdcon-app
+  namespace: cdcon
+  labels:
+    app: cdcon-app
+spec:
+  type: NodePort
+  ports:
+  - port: 8082
+    name: cdcon-app
+    nodePort: 32426
+  selector:
+    app: cdcon-app

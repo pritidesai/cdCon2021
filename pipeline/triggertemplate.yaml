@@ -1,0 +1,85 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: cdcon-tt
+spec:
+
+  params:
+  - name: git-repo-url
+  - name: git-repo-name
+  - name: git-revision
+    default: master
+
+  resourcetemplates:
+
+  - apiVersion: tekton.dev/v1alpha1
+    kind: PipelineResource
+    metadata:
+      name: cdcon-source-$(uid)
+      namespace: cdcon
+    spec:
+      params:
+      - name: url
+        value: $(tt.params.git-repo-url)
+      - name: revision
+        value: $(tt.params.git-revision)
+      - name: git-repo-name
+        value: $(tt.params.git-repo-name)
+      type: git
+
+  - apiVersion: tekton.dev/v1alpha1
+    kind: PipelineResource
+    metadata:
+      name: cdcon-image-$(uid)
+      namespace: cdcon
+    spec:
+      params:
+      - name: url
+        value: 'docker.io/pritidesai/web-node-app:latest'
+      type: image
+
+  - apiVersion: tekton.dev/v1beta1
+    kind: PipelineRun
+    metadata:
+      generateName: cdcon-pipeline-run-
+      namespace: cdcon
+    spec:
+      serviceAccountName: cdcon-app-builder
+      pipelineRef:
+        name: cdcon-pipeline
+      resources:
+      - name: cdcon-source
+        resourceRef:
+          name: cdcon-source-$(uid)
+      - name: cdcon-image
+        resourceRef:
+          name: cdcon-image-$(uid)
+---
+
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: cdcon-tb
+spec:
+  params:
+  - name: git-repo-url
+    value: $(body.repository.url)
+  - name: git-revision
+    value: $(body.head_commit.id)
+  - name: git-repo-name
+    value: $(body.repository.name)
+---
+
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: cdcon-el
+spec:
+  serviceAccountName: cdcon-app-builder
+  triggers:
+    - name: cdcon
+      bindings:
+        - ref: cdcon-tb
+      template:
+        ref: cdcon-tt
+---

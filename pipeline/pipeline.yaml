@@ -1,0 +1,60 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: cdcon-pipeline
+  namespace: cdcon
+spec:
+
+  params:
+    - name: BUILDER_IMAGE
+      type: string
+      default: 'gcr.io/kaniko-project/executor:latest'
+    - name: DOCKERFILE
+      type: string
+      default: ./Dockerfile
+
+  resources:
+    - name: cdcon-source
+      type: git
+    - name: cdcon-image
+      type: image
+
+  tasks:
+
+    - name: build-and-publish-image
+      params:
+        - name: BUILDER_IMAGE
+          value: $(params.BUILDER_IMAGE)
+        - name: DOCKERFILE
+          value: $(params.DOCKERFILE)
+      resources:
+        inputs:
+          - name: source
+            resource: cdcon-source
+        outputs:
+          - name: image
+            resource: cdcon-image
+      taskSpec:
+        params:
+          - name: BUILDER_IMAGE
+            type: string
+            default: 'gcr.io/kaniko-project/executor:latest'
+          - name: DOCKERFILE
+            type: string
+            default: ./Dockerfile
+        resources:
+          inputs:
+            - name: source
+              type: git
+          outputs:
+            - name: image
+              type: image
+        steps:
+          - name: build-app-image-with-kaniko
+            image: $(params.BUILDER_IMAGE)
+            command:
+              - /kaniko/executor
+            args:
+              - --dockerfile=$(resources.inputs.source.path)/$(params.DOCKERFILE)
+              - --destination=$(resources.outputs.image.url)
+              - --context=dir://$(resources.inputs.source.path)/
