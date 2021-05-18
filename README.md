@@ -227,6 +227,16 @@ argocd app sync cdcon-app-build
 
 ![alt argo-pipeline](images/argocd-tekton-pipeline.png)
 
+```shell
+kubectl get eventlistener -n cdcon
+NAME       ADDRESS                                           AVAILABLE   REASON                     READY   REASON
+cdcon-el   http://el-cdcon-el.cdcon.svc.cluster.local:8080   True        MinimumReplicasAvailable
+```
+
+```shell
+kubectl port-forward  svc/el-cdcon-el -n cdcon 8080
+```
+
 ### What's inside Deployment?
 
 * [deployment.yaml](deployment/deployment.yaml) - This represents our Kubernetes Deployment.

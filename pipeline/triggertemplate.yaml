@@ -2,6 +2,7 @@ apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerTemplate
 metadata:
   name: cdcon-tt
+  namespace: cdcon
 spec:
 
   params:
@@ -47,6 +48,7 @@ spec:
       serviceAccountName: cdcon-app-builder
       pipelineRef:
         name: cdcon-pipeline
+        namespace: cdcon
       resources:
       - name: cdcon-source
         resourceRef:
@@ -60,6 +62,7 @@ apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerBinding
 metadata:
   name: cdcon-tb
+  namespace: cdcon
 spec:
   params:
   - name: git-repo-url
@@ -74,6 +77,7 @@ apiVersion: triggers.tekton.dev/v1alpha1
 kind: EventListener
 metadata:
   name: cdcon-el
+  namespace: cdcon
 spec:
   serviceAccountName: cdcon-app-builder
   triggers:
