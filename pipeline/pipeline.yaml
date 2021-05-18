@@ -12,6 +12,12 @@ spec:
     - name: DOCKERFILE
       type: string
       default: ./Dockerfile
+    - name: application-name
+      default: 'cdcon-app-deploy'
+    - name: flags
+      default: '--insecure'
+    - name: argocd-version
+      default: 'v2.0.1'
 
   resources:
     - name: cdcon-source
@@ -58,3 +64,14 @@ spec:
               - --dockerfile=$(resources.inputs.source.path)/$(params.DOCKERFILE)
               - --destination=$(resources.outputs.image.url)
               - --context=dir://$(resources.inputs.source.path)/
+
+    - name: argocd-sync-deployment
+      params:
+        - name: application-name
+          value: $(params.application-name)
+        - name: flags
+          value: $(params.flags)
+        - name: argocd-version
+          value: $(params.argocd-version)
+      taskRef:
+        name: argocd-task-sync-and-wait
