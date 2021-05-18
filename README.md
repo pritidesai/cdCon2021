@@ -133,7 +133,6 @@ Browse http://localhost:8001/api/v1/namespaces/tekton-pipelines/services/tekton-
 
 ```shell
 kubectl create namespace cdcon
-kubectl create namespace argocd
 ```
 
 ### Install the Argo CD Tekton Task into the `argocd` namespace

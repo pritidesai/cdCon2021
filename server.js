@@ -11,7 +11,7 @@ const VERSION = process.env.VERSION || "1.0.0";
 // App
 const app = express();
 app.get('/', (req, res) => {
-  res.send('<h1 align="center">Hello cdCon 2021!</h1><h3 align="center">\n\n\nVersion: '+VERSION+'</h3>');
+  res.send('<h1 align="center">Hello cdCon 2021!</h1>\n\n\n<h3 align="center">Version: '+VERSION+'</h3>');
 });
 
 app.listen(PORT, HOST);
