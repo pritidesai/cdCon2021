@@ -1,3 +1,6 @@
+# ArgoCD Cluster IP
+kubectl get svc/argocd-server -n argocd -ojson | jq .spec.clusterIP
+
 # Port forward ArgoCD load balancer
 kubectl port-forward svc/argocd-server -n argocd 8090:443
 
