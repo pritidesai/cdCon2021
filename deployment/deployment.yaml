@@ -18,6 +18,6 @@ spec:
     spec:
       containers:
       - name: cdcon-app
-        image: docker.io/pritidesai/cdcon-app:latest
+        image: docker.io/pritidesai/cdcon2021-app:latest
         ports:
         - containerPort: 8082
