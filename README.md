@@ -143,7 +143,7 @@ new Deployment. There is a special task that allows Tekton to trigger a ArgoCD s
 
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/argocd-task-sync-and-wait/0.1/argocd-task-sync-and-wait.yaml
+kubectl apply -n cdcon -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/argocd-task-sync-and-wait/0.1/argocd-task-sync-and-wait.yaml
 ```
 
 ### Update ArgoCD secret

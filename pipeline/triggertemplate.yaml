@@ -48,7 +48,6 @@ spec:
       serviceAccountName: cdcon-app-builder
       pipelineRef:
         name: cdcon-pipeline
-        namespace: cdcon
       resources:
       - name: cdcon-source
         resourceRef:
