@@ -1,4 +1,4 @@
-# Build, Publish, and Deploy using Tekton and ArgoCD
+# Build, publish, and deploy using Tekton and ArgoCD
 
 This repository contains a simple application that uses [ArgoCD](https://argoproj.github.io/argo-cd/) to deploy its
 [Tekton pipeline](https://github.com/tektoncd/pipeline) to [Docker Desktop](https://docs.docker.com/desktop/kubernetes/).
