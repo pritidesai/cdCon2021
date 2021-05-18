@@ -36,7 +36,7 @@ spec:
     spec:
       params:
       - name: url
-        value: 'docker.io/pritidesai/web-node-app:latest'
+        value: 'docker.io/pritidesai/cdcon2021-app:latest'
       type: image
 
   - apiVersion: tekton.dev/v1beta1

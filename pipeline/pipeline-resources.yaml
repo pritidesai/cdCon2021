@@ -6,7 +6,7 @@ metadata:
 spec:
   params:
     - name: url
-      value: 'https://github.com/pritidesai/node-web-app'
+      value: 'https://github.com/pritidesai/cdCon2021'
     - name: revision
       value: master
   type: git
@@ -19,6 +19,5 @@ metadata:
 spec:
   params:
     - name: url
-#      value: 'docker.io/pritidesai/cdcon2021-app:latest'
-      value: 'docker.io/pritidesai/web-node-app:latest'
+      value: 'docker.io/pritidesai/cdcon2021-app:latest'
   type: image

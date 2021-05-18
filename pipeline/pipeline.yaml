@@ -66,6 +66,8 @@ spec:
               - --context=dir://$(resources.inputs.source.path)/
 
     - name: argocd-sync-deployment
+      runAfter:
+        - build-and-publish-image
       params:
         - name: application-name
           value: $(params.application-name)
