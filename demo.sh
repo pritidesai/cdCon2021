@@ -1,8 +1,14 @@
+# expose event listener so that the GitHub webhook can deliver the JSON payload
+~/Downloads/ngrok http 8080
+
 # ArgoCD Cluster IP
 kubectl get svc/argocd-server -n argocd -ojson | jq .spec.clusterIP
 
 # Port forward ArgoCD load balancer
 kubectl port-forward svc/argocd-server -n argocd 8090:443
+
+# ArgoCD is available at
+https://localhost:8090/
 
 # Port forward Tekton Dashboard so that its available at
 # http://localhost:8001/api/v1/namespaces/tekton-pipelines/services/tekton-dashboard:http/proxy
@@ -14,9 +20,6 @@ kubectl create namespace cdcon
 # Create ArgoCD secret and Service Account
 kubectl apply -n cdcon -f pipeline/argocdsecret.yaml
 kubectl apply -n cdcon -f pipeline/service-account.yaml
-
-# ArgoCD is available at
-https://localhost:8090/
 
 # Create ArgoCD app to sync Tekton Pipeline
 argocd app create cdcon-app-build --repo https://github.com/pritidesai/cdCon2021 --path pipeline --dest-name docker-desktop --dest-namespace cdcon
@@ -32,8 +35,7 @@ argocd app create cdcon-app-deploy --repo https://github.com/pritidesai/cdCon202
 # Port forward Tekton Event Listener
 kubectl port-forward  svc/el-cdcon-el -n cdcon 8080
 
-# expose event listener so that the GitHub webhook can deliver the JSON payload
-~/Downloads/ngrok http 8080
+# Tekton Dashboard
 
 # Setup GitHub webhook
 
